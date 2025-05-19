@@ -1,0 +1,1 @@
+enum PaymentGatewayType{bkash,nagad,}
