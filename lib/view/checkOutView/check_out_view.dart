@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:payment_getway/utils/enum.dart';
 import 'package:payment_getway/utils/static_value.dart';
 import 'package:payment_getway/view/checkOutView/helper/payment_helper.dart';
+import 'package:payment_getway/view/checkOutView/widget/payment_card_item.dart';
 
 class CheckOutView extends StatefulWidget {
   const CheckOutView({super.key});
@@ -12,10 +15,12 @@ class CheckOutView extends StatefulWidget {
 
 class _CheckOutViewState extends State<CheckOutView> {
   PaymentGatewayType? selectedGetway;
+  int? selectItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: CupertinoColors.systemGrey6,
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(
@@ -26,17 +31,18 @@ class _CheckOutViewState extends State<CheckOutView> {
           ),
         ),
       ),
+      //checkOutbutton
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor:selectedGetway==null ?Colors.blue.withOpacity(.3): Colors.blue,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: selectedGetway == null
                 ? () {}
                 : () {
-                    onButtonTap(selectedGetway!);
+                    onButtonTap(selectedGetway!, 1, context);
                   },
             child: const Text(
               "Continue to payment",
@@ -67,41 +73,17 @@ class _CheckOutViewState extends State<CheckOutView> {
                 itemCount: StaticValue.getways.length ?? 0,
                 itemBuilder: (context, index) {
                   final item = StaticValue.getways[index];
-                  return InkWell(
+                  //payment card item
+                  return PaymentCardItem(
                     onTap: () {
                       setState(() {
                         selectedGetway = item.gateway;
+                        selectItem = index;
                       });
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.blue)),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            item.image ?? "",
-                            height: 30,
-                            width: 30,
-                            fit: BoxFit.fill,
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "${item.paymentName}",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    imageLink: item.image,
+                    paymentName: item.paymentName,
+                    selectedGetway: selectItem == index,
                   );
                 },
               ),

@@ -7,6 +7,22 @@ class StaticValue {
     PaymentOption(
       paymentName: "bkash",
       image: "assets/images/bkash.png", gateway: PaymentGatewayType.bkash,
-    )
+    ),
+    PaymentOption(
+      paymentName: "bkash",
+      image: "assets/images/bkash.png", gateway: PaymentGatewayType.bkash,
+    ),
+    PaymentOption(
+      paymentName: "bkash",
+      image: "assets/images/bkash.png", gateway: PaymentGatewayType.bkash,
+    ),
+    PaymentOption(
+      paymentName: "bkash",
+      image: "assets/images/bkash.png", gateway: PaymentGatewayType.bkash,
+    ),
+    PaymentOption(
+      paymentName: "bkash",
+      image: "assets/images/bkash.png", gateway: PaymentGatewayType.bkash,
+    ),
   ];
 }
